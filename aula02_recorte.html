@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="seu_canvas" width="400" height="400">
+        <script>
+            var canvas = document.getElementById("seu_canvas");
+            var context = canvas.getContext("2d");
+
+            // Carregar imagem
+            var img = new Image();
+            img.src = 'img/explosao.png';
+
+            img.onload = function(){
+                context.drawImage(
+                    img, 
+                    150, 10, 60, 65,// Recorte (X, Y, Largura, Altura)
+                    20, 20, 60, 65 // Desenho (X, Y, Largura, Altura)
+                );
+
+            }
+
+        </script>
+    </canvas>
+</body>
+</html>
