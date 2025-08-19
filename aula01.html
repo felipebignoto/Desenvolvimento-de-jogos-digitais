@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="seu_canvas" width="400" height="400" >
+        <script>
+            var canvas = document.getElementById("seu_canvas");
+            var context = canvas.getContext("2d");
+            
+            //desenhar um retângulo
+            context.fillStyle = "blue";
+            context.fillRect(0, 0, 150, 100);
+            
+            // desenhar borda preta
+            context.strokeStyle = "black";
+            context.lineWidth = 2;
+            context.strokeRect(0, 0, 150, 100);
+
+            // desenhar um círculo
+            context.fillStyle = "red";
+            context.strokeStyle = "blue";
+            context.lineWidth = 2;
+            context.beginPath();
+            context.arc(200, 200, 50, 0, 2 * Math.PI);
+            context.fill();
+            context.stroke();
+    </script>
+    </canvas>
+</body>
+</html>

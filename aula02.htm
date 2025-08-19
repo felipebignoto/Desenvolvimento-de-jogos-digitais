@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="seu_canvas" width="400" height="400">
+        <script>
+            var canvas = document.getElementById("seu_canvas");
+            var context = canvas.getContext("2d");
+            
+
+            // Estrela
+            context.beginPath();
+            context.moveTo(75,250);
+            context.lineTo(150,50);
+            context.lineTo(225,250);
+            context.lineTo(50,120);
+            context.lineTo(250,120);
+            context.lineTo(75,250);
+            context.lineWidth = 2;
+            context.strokeStyle = "red";
+            context.stroke();
+
+            // Hexágono
+            context.beginPath();
+            context.moveTo(300, 200);
+            context.lineTo(350, 150);
+            context.lineTo(400, 200);
+            context.lineTo(400, 275);
+            context.lineTo(350, 325);
+            context.lineTo(300, 275);
+            context.lineTo(300, 200);
+            context.lineWidth = 2;
+            context.strokeStyle = "blue";
+            context.stroke();
+        </script>
+    </canvas>
+</body>
+</html>
