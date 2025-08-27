@@ -31,10 +31,29 @@
       b2.cor = 'blue';
       b2.raio = 30;
 
+      //Atividades
+      var b3 = new Bola(context);
+      b3.x = 300;
+      b3.y = 400;
+      b3.velocidadeX = 15;
+      b3.velocidadeY = -15;
+      b3.cor = 'green';
+      b3.raio = 25;
+
+      var b4 = new Bola(context);
+      b4.x = 400;
+      b4.y = 300;
+      b4.velocidadeX = -25;
+      b4.velocidadeY = 10;
+      b4.cor = 'purple';
+      b4.raio = 10;
+
       // Criando o loop de animação
       var animacao = new Animacao(context);
       animacao.novoSprite(b1);
       animacao.novoSprite(b2);
+      animacao.novoSprite(b3);
+      animacao.novoSprite(b4);
 
       // "Ligar" a animação
       animacao.ligar();
