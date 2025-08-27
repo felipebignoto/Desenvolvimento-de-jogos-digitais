@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="seu_canvas" width="400" height="400"></canvas>
+    <script>
+        var canvas = document.getElementById("seu_canvas");
+        var context = canvas.getContext("2d");
+
+        var x = 20;
+        var y = 100;
+        var raio = 5;
+
+        // Momento inicial
+        var anterior = new Date().getTime();
+
+        // Iniciar animação
+        requestAnimationFrame(mexerBola);
+
+        // Função de animação
+        function mexerBola() {
+            var agora = new Date().getTime();
+            var decorrido = agora - anterior;
+
+            context.clearRect(0, 0, canvas.width, canvas.height);
+
+            // desenhar círculo
+            context.beginPath();
+            context.arc(x, y, raio, 0, Math.PI * 2);
+            context.fill();
+
+            // deslocar bola
+            var velocidade = 20;
+            x += velocidade * (decorrido / 1000); // velocidade em px/s
+
+            anterior = agora;
+
+            // chamar próximo quadro
+            requestAnimationFrame(mexerBola);
+        }
+    </script>
+</body>
+</html>

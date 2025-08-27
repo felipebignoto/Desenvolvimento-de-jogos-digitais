@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movimento para Cima</title>
+</head>
+<body>
+    <canvas id="canvas_cima" width="400" height="400"></canvas>
+    <script>
+        var canvas = document.getElementById("canvas_cima");
+        var context = canvas.getContext("2d");
+
+        var x = 200;
+        var y = 380;
+        var raio = 15;
+        var anterior = new Date().getTime();
+        var direcao = -1; // -1 para cima, 1 para baixo
+        
+        var img = new Image();
+        img.src = "img/ovni.png";
+
+        function moverCima() {
+            var agora = new Date().getTime();
+            var decorrido = agora - anterior;
+
+            context.clearRect(0, 0, canvas.width, canvas.height);
+
+            // desenhar imagem
+            var largura = 40;
+            var altura = 40;
+            context.drawImage(img, x - largura/2, y - altura/2, largura, altura);
+
+            // mover para cima ou para baixo
+            var velocidade = 60; // px por segundo
+            y += direcao * velocidade * (decorrido / 1000);
+
+            // inverter direção ao chegar no topo ou base
+            if (y - altura/2 <= 0) {
+                y = altura/2;
+                direcao = 1; // começa a descer
+            } else if (y + altura/2 >= canvas.height) {
+                y = canvas.height - altura/2;
+                direcao = -1; // começa a subir
+            }
+
+            anterior = agora;
+            requestAnimationFrame(moverCima);
+        }
+
+        img.onload = function() {
+            requestAnimationFrame(moverCima);
+        };
+    </script>
+</body>
+</html>

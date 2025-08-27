@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movimento para Direita</title>
+</head>
+<body>
+    <canvas id="canvas_direita" width="400" height="400"></canvas>
+    <script>
+        var canvas = document.getElementById("canvas_direita");
+        var context = canvas.getContext("2d");
+
+        var x = 20;
+        var y = 200;
+        var raio = 15;
+        var anterior = new Date().getTime();
+
+        function moverDireita() {
+            var agora = new Date().getTime();
+            var decorrido = agora - anterior;
+
+            context.clearRect(0, 0, canvas.width, canvas.height);
+
+            // desenhar círculo
+            context.beginPath();
+            context.arc(x, y, raio, 0, Math.PI * 2);
+            context.fillStyle = "#3498db";
+            context.fill();
+
+            // mover para direita
+            var velocidade = 60; // px por segundo
+            x += velocidade * (decorrido / 1000);
+            if (x - raio > canvas.width) x = -raio; // volta para o início
+
+            anterior = agora;
+            requestAnimationFrame(moverDireita);
+        }
+
+        requestAnimationFrame(moverDireita);
+    </script>
+</body>
+</html>
