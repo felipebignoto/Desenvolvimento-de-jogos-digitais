@@ -21,6 +21,13 @@ Heroi.prototype = {
          this.direcao = DIRECAO_DIREITA;
          this.x += 10;
       }
+      else if (this.teclado.pressionada(SETA_CIMA) && this.y > 0) {
+         this.y -= 10;
+      }
+      else if (this.teclado.pressionada(SETA_BAIXO) && 
+               this.y < this.context.canvas.height - 50) {
+         this.y += 10;
+      }
    },
    desenhar: function() {
       this.context.fillRect(this.x, this.y, 20, 50);
