@@ -3,10 +3,23 @@
 
 <head>
    <title>Personagem controlável e animado</title>
+   <style>
+      html, body {
+         height: 100%;
+         margin: 0;
+      }
+      body {
+         display: flex;
+         justify-content: center;
+         align-items: center;      
+         font-family: sans-serif;
+         background-color: aquamarine;
+      }
+   </style>
    <script src="spritesheet.js"></script> 
    <script src="animacao.js"></script> 
    <script src="teclado.js"></script> 
-   <script src="sonic.js"></script>
+   <script src="homem.js"></script>
 </head>
 
 <body>
@@ -18,17 +31,16 @@
       var teclado = new Teclado(document); 
       var animacao = new Animacao(context); 
 
-      var imgSonic = new Image(); 
-      imgSonic.src = 'spritesheet.png'; 
+      var imgHomem = new Image();
+      imgHomem.src = 'homem.png';
 
-      var sonic = new Sonic(context, teclado, imgSonic);
-      sonic.x = 0; 
-      sonic.y = 200; 
-      animacao.novoSprite(sonic);
-
-      imgSonic.onload = function() {
+      imgHomem.onload = function() {
+         var homem = new Homem(context, teclado, imgHomem);
+         homem.x = 50;
+         homem.y = 200;
+         animacao.novoSprite(homem);
          animacao.ligar();
-      }
+      };
    </script>
 </body>
 
