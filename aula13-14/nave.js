@@ -27,7 +27,14 @@ Nave.prototype = {
             this.imagem.width, this.imagem.height);
    },
    atirar: function() {
-      var t = new Tiro(this.context, this);
-      this.animacao.novoSprite(t);
+      if (typeof window.animacao !== 'undefined') {
+         // Usando fração da largura da nave para offset automático
+         var offsetEsquerda = -this.imagem.width * 0.3;
+         var offsetDireita = this.imagem.width * 0.3;
+         var t1 = new Tiro(this.context, this, offsetEsquerda);
+         var t2 = new Tiro(this.context, this, offsetDireita);
+         window.animacao.novoSprite(t1);
+         window.animacao.novoSprite(t2);
+      }
    }
 }
