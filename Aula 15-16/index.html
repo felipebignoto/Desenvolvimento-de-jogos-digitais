@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detecção de Colisão</title>
+    <script src= "bola.js"></script> 
+    <script src= "colisao.js"></script> 
+</head>
+<body>
+    <canvas id="canvas_colisao" width="500" height="500" style="border: 2px solid black;"></canvas>
+    <script>
+        var canvas = document.getElementById("canvas_colisao");
+        var context = canvas.getContext("2d");
+
+        var sprites = [];
+
+        function novaBola(x, y, vx, vy, cor, raio) {
+            var b = new Bola(context);
+            b.x = x; b.y = y; b.velocidadeX = vx; b.velocidadeY = vy; b.cor = cor; b.raio = raio;
+            sprites.push(b);
+            return b;
+        }
+
+        var b1 = novaBola(200,200,-5,10,'blue',20);
+        var b2 = novaBola(300,300,-5,10,'red',30);
+        var b3 = novaBola(100,100,-3,5,'purple',25);
+
+        var colisor = new Colisor();
+        sprites.forEach(function(s){ colisor.novoSprite(s); });
+
+        colisor.aoColidir = function(s1, s2, idx1, idx2, contador) {
+            if (typeof idx1 === 'number') s1.ultimoRetangColidido = idx1;
+            if (typeof idx2 === 'number') s2.ultimoRetangColidido = idx2;
+
+            s1.cor = mudaCorAleatoria(s1.cor);
+            s2.cor = mudaCorAleatoria(s2.cor);
+
+            s2.ocultoTimer = 30;
+
+            if (contador >= 3) {
+                mostraGameOver();
+                gameOverParado = true;
+            }
+        };
+
+        function mudaCorAleatoria(corAtual) {
+            var cores = ['red','blue','green','orange','purple','yellow','pink','cyan'];
+            var idx = Math.floor(Math.random() * cores.length);
+            return cores[idx];
+        }
+
+        function removeSprite(sprite) {
+            var idx = sprites.indexOf(sprite);
+            if (idx >= 0) sprites.splice(idx,1);
+            var idx2 = colisor.sprites.indexOf(sprite);
+            if (idx2 >= 0) colisor.sprites.splice(idx2,1);
+        }
+
+        var gameOverExibido = false;
+        var gameOverParado = false;
+        function mostraGameOver() {
+            gameOverExibido = true;
+        }
+
+        function animar() {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            for (var i = 0; i < sprites.length; i++) {
+                sprites[i].atualizar();
+            }
+            for (var i = 0; i < sprites.length; i++) {
+                sprites[i].desenhar();
+            }
+
+            colisor.processar();
+
+            if (gameOverExibido) {
+                context.save();
+                context.fillStyle = 'black';
+                context.font = '24px sans-serif';
+                context.fillText('\uD83D\uDC49 Game Over', 10, 30);
+                context.restore();
+            }
+
+            if (!gameOverParado) requestAnimationFrame(animar);
+        }
+
+        animar();
+    
+    </script>
+    
+</body>
+</html>
