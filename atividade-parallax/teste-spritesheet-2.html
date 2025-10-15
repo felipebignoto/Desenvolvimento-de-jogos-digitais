@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <title>Sonic com Efeito Parallax</title>
+   <style>
+      html, body {
+         height: 100%;
+         margin: 0;
+      }
+      body {
+         display: flex;
+         justify-content: center;
+         align-items: center;      
+         font-family: sans-serif;
+      }
+   </style>
+   <script src="spritesheet.js"></script> 
+   <script src="animacao.js"></script> 
+   <script src="teclado.js"></script> 
+   <script src="fundo.js"></script>
+   <script src="chao.js"></script>
+   <script src="parallax.js"></script>
+   <script src="sonic.js"></script>
+</head>
+
+<body>
+   <canvas id="canvas_sonic" width="500" height="500"></canvas>
+   <script>
+      var canvas = document.getElementById('canvas_sonic');
+      var context = canvas.getContext('2d');
+
+      var teclado = new Teclado(document); 
+      var animacao = new Animacao(context); 
+      var parallax = new GerenciadorParallax(context);
+
+      // Variáveis para controlar carregamento das imagens
+      var imagensCarregadas = 0;
+      var totalImagens = 4; // 3 fundos + 1 sonic
+      var sonic;
+      var chao;
+
+      // Imagens de fundo para parallax
+      var imgEspaco = new Image();
+      var imgEstrelas = new Image();
+      var imgNuvens = new Image();
+      var imgSonic = new Image();
+
+      function imagemCarregada() {
+         imagensCarregadas++;
+         if (imagensCarregadas === totalImagens) {
+            iniciarJogo();
+         }
+      }
+
+      function iniciarJogo() {
+         // Adiciona as camadas de fundo em ordem (mais distante para mais próxima)
+         // Velocidades: mais distante = mais lenta, mais próxima = mais rápida
+         parallax.adicionarCamada(imgEspaco, 0.2);    // Fundo mais distante (mais lento)
+         parallax.adicionarCamada(imgEstrelas, 0.5);  // Camada intermediária
+         parallax.adicionarCamada(imgNuvens, 0.8);    // Camada mais próxima (mais rápida)
+         
+         // Cria e adiciona o chão (camada mais próxima - velocidade máxima)
+         chao = new Chao(context, canvas.width, canvas.height);
+         parallax.adicionarChao(chao);
+
+         // Cria o Sonic
+         sonic = new Sonic(context, teclado, imgSonic);
+         sonic.x = 50;
+         sonic.y = canvas.height - 100 - 40; // Posiciona o Sonic mais próximo do chão
+
+         // Modifica a animação para incluir o parallax
+         animacao.novoSprite({
+            atualizar: function() {
+               sonic.atualizar();
+               parallax.definirVelocidadeCamera(sonic.velocidadeCamera);
+               parallax.atualizar();
+            },
+            desenhar: function() {
+               parallax.limpar();
+               parallax.desenhar();
+               sonic.desenhar();
+            }
+         });
+
+         animacao.ligar();
+      }
+
+      // Carrega todas as imagens
+      imgEspaco.onload = imagemCarregada;
+      imgEspaco.src = 'fundo-espaco.png';
+
+      imgEstrelas.onload = imagemCarregada;
+      imgEstrelas.src = 'fundo-estrelas.png';
+
+      imgNuvens.onload = imagemCarregada;
+      imgNuvens.src = 'fundo-nuvens.png';
+
+      imgSonic.onload = imagemCarregada;
+      imgSonic.src = 'spritesheet.png';
+   </script>
+</body>
+
+</html>
+
+
+
